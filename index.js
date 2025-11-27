@@ -33,7 +33,7 @@ async function run() {
       if (email) {
         query.senderEmail = email;
       }
-      const result = await productCollection.find().toArray(query);
+      const result = await productCollection.find(query).toArray();
       res.send(result);
     });
 
@@ -47,7 +47,7 @@ async function run() {
 
     app.post("/products", async (req, res) => {
       const parcel = req.body;
-      const result = productCollection.insertOne(parcel);
+      const result = await productCollection.insertOne(parcel);
       res.send(result);
     });
 
@@ -70,7 +70,7 @@ async function run() {
       res.send(result);
     });
 
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
